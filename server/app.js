@@ -16,14 +16,14 @@ app.use(express.json()); // To parse JSON bodies
 app.use(cors());
 
 app.get("/*", function (req, res) {
-  res.sendFile(
-    path.join(__dirname, "../client/build/index.html"),
-    function (err) {
-      if (err) {
-        res.status(500).send(err);
-      }
-    }
-  );
+    res.sendFile(
+        path.join(__dirname, "../client/build/index.html"),
+        function (err) {
+            if (err) {
+                res.status(500).send(err);
+            }
+        }
+    );
 });
 
 // Import and use the HubSpot router
