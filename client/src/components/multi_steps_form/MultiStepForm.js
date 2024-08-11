@@ -13,6 +13,7 @@ const MasterForm = ({ contactId }) => {
     employment_duration: "",
     withdrawal_history: "",
   });
+  const [isNextDisabled, setIsNextDisabled] = useState(true);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -20,6 +21,7 @@ const MasterForm = ({ contactId }) => {
       ...prev,
       [name]: value,
     }));
+    setIsNextDisabled(false); // Enable Next button once an option is selected
   };
 
   const handleSubmit = useCallback(async (e) => {
@@ -48,15 +50,26 @@ const MasterForm = ({ contactId }) => {
         withdrawal_history: "",
       });
       setCurrentStep(1);
+      setIsNextDisabled(true); // Disable Next button after submission
     }
   });
 
   const handleNext = () => {
-    setCurrentStep((prev) => (prev >= steps.length ? steps.length : prev + 1));
+    const currentFieldName = steps[currentStep - 1].fields[0].name;
+    if (formData[currentFieldName]) {
+      setCurrentStep((prev) =>
+        prev >= steps.length ? steps.length : prev + 1
+      );
+      setIsNextDisabled(!formData[steps[currentStep].fields[0].name]); // Check if the next step has an option selected
+    }
   };
 
   const handlePrevious = () => {
     setCurrentStep((prev) => (prev <= 1 ? 1 : prev - 1));
+    const previousFieldName = steps[currentStep - 2]?.fields[0]?.name;
+    if (previousFieldName) {
+      setIsNextDisabled(!formData[previousFieldName]); // Check if the previous step had an option selected
+    }
   };
 
   return (
@@ -116,6 +129,7 @@ const MasterForm = ({ contactId }) => {
                 className="btn btn-primary float-right"
                 type="button"
                 onClick={handleNext}
+                disabled={isNextDisabled} // Disable Next button if no option is selected
               >
                 הבא
               </button>
