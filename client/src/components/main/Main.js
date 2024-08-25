@@ -38,9 +38,20 @@ const Main = () => {
         </div>
         <div className="row pb-">
           <div className="col-md-12 main_img_container">
-            <img className="main_img" src={mainImg} alt={"logo"} />
+            <div className="video-wrapper">
+              <iframe
+                className="main_video"
+                src="https://www.youtube.com/embed/80a_lrVdfqk?autoplay=1&mute=1&loop=1&playlist=80a_lrVdfqk&controls=0&modestbranding=1&showinfo=0&rel=0"
+                frameBorder="0"
+                allow="autoplay; encrypted-media"
+                allowFullScreen
+                title="Embedded Video">
+              </iframe>
+            </div>
           </div>
         </div>
+
+
         <div className="row  text-center pt-3">
           {cardsData.title.map((val, index) => (
             <div className="col-md-6 col-12 pb-3" key={index}>
